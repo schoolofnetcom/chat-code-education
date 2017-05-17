@@ -25,13 +25,20 @@ class BotController extends Controller
         $event = $event['entry'][0]['messaging'][0];
 
         $senderId = $event['sender']['id'];
-        $message = $event['message']['text'];
-        //$postback = $event['postback'];
+        //$message = $event['message']['text'];
+        $postback = $event['postback'];
 
         $text = new Text($senderId);
-        $text = $text->message('Você degitou: ' . $message);
-
         $callSendApi = new CallSendAPI(config('botfb.pageAccessToken'));
-        return $callSendApi->make($text);
+
+        switch ($postback['payload']) {
+            case 'inicio':
+                $message = $text->message('Oiii!!!!');
+                $callSendApi->make($message);
+
+                $message = $text->message('Eu sou o BotCode e fui criado na série de videos sobre bots da Code.Education');
+                $callSendApi->make($message);
+                break;
+        }
     }
 }
