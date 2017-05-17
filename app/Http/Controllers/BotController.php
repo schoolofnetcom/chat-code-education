@@ -40,5 +40,7 @@ class BotController extends Controller
                 $callSendApi->make($message);
                 break;
         }
+
+        return response()->json(['status'=>'success']);
     }
 }
